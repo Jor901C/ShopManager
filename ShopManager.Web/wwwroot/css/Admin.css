@@ -1,0 +1,87 @@
+﻿.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    margin-top:-20px;
+}
+.containerForResult {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.filter-container {
+    display: inline-block;
+    margin-right: 20px; /* Регулируйте отступ между контейнерами по вашему усмотрению */
+}
+
+.names-container {
+    display: flex;
+    flex-direction: column;
+}
+.calculator-container {
+    position: absolute;
+    top: 8%;
+    right: 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    width: 25%;
+    height:50%;
+}
+
+.manager-container,
+.shop-container {
+    margin-bottom: 5px; /* Регулируйте отступ между именами и чекбоксами */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-primary:focus,
+    .btn-primary.focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    }
+
+h1 {
+    color: #333;
+}
+
+
+.buttons button {
+    margin: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .buttons button:hover {
+        background-color: #0056b3;
+       
+    }
+
+.border {
+    margin-top: 20px;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #0056b3;
+    width: 100%; /* Изменяем ширину на 100% */
+}
+
+
+
+
+   

@@ -1,0 +1,14 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Чтобы видео занимало весь задний план */
+}
+
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1; /* Чтобы видео было под всеми остальными элементами */
+}

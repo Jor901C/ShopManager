@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Manager Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Подключаем общий макет
+}
+@section Scripts {
+    <script src="~/js/Manager/ManagerSendRevenue.js"></script>
+    
+}
+<meta charset="UTF-8">
+<div class="container">
+    <h1>Добро Пожаловать , Manager</h1>
+    <div class="buttons">
+        <button id="showAllRevenue">Выручки</button>
+        <button id="sendReport">Отрпавить отчет</button>
+        <button id="showSales">Диограмма продаж</button>
+        <button id="calculate">Калькулятор</button>
+    </div>
+</div>
+
+<div class="border"></div>
+<div class="containerforResult">
+</div>
+
+
