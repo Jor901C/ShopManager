@@ -11,9 +11,10 @@ namespace ShopManager.Web.Data
             : base(options)
         {
         }
-        public DbSet<UserModel> ShopUsers { get; set; }
+        //Adding all my data to this DbContext
+        public DbSet<UserModel> ShopUser { get; set; }
         public DbSet<Market> Market { get; set; }
-        public DbSet<MarketAddress> Addres { get; set; }
+        public DbSet<MarketAddress> Address { get; set; }
         public DbSet<Sales> Sales { get; set; }
     }
 }

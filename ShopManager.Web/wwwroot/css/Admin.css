@@ -20,15 +20,13 @@
     display: flex;
     flex-direction: column;
 }
-.calculator-container {
+.diogram-container {
     position: absolute;
     top: 8%;
-    right: 0;
+    left:0;
     padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
     width: 25%;
-    height:50%;
+    height:60%;
 }
 
 .manager-container,
@@ -80,6 +78,41 @@ h1 {
     background-color: #0056b3;
     width: 100%; /* Изменяем ширину на 100% */
 }
+.calculate {
+    width: 300px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .calculate button {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        margin: 5px;
+        border-radius: 5px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+
+        .calculate button:hover {
+            background-color: #e0e0e0;
+        }
+
+    .calculate #display {
+        width: calc(100% - 20px);
+        height: 40px;
+        font-size: 24px;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        text-align: right;
+    }
 
 
 

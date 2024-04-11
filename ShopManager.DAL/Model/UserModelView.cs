@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopManager.DAL.Model
+﻿namespace ShopManager.DAL.Model
 {
     public class UserModelView
     {
@@ -13,7 +7,7 @@ namespace ShopManager.DAL.Model
         public string MiddleName { get; set; } = string.Empty;
         public string Email {  get; set; } = string.Empty;
         public string PhoneNumber {  get; set; } = string.Empty; 
-        public string stringId { get; set; } = string.Empty ;
+        public string StringId { get; set; } = string.Empty ;
         
         
 

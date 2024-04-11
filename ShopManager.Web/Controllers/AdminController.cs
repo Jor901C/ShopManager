@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Infrastructure.Entities.Market;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using ShopManager.DAL.Entities.User;
 using ShopManager.Services.Abstract;
 
 namespace ShopManager.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IManagerService _managerService;
+        //DI
         public AdminController(IManagerService managerService , UserManager<UserModel> userManager , RoleManager<IdentityRole> roleManager)
         {
             _managerService = managerService;
@@ -17,44 +22,91 @@ namespace ShopManager.Web.Controllers
             return View();
         }
 
-
+        [HttpGet]
         public async Task <IActionResult> GetAllUser() 
         {
-            var allUser = await _managerService.GetAllUser();
-            return Json(allUser);
+            return Json(await _managerService.GetAllUserAsync());
         }
 
+        [HttpPost]
         public async Task <IActionResult> DeleteUser(string managerId)
         {
+            return Json(await _managerService.RemoveManagerAsync(managerId));
+        }
 
-            await _managerService.RemoveManagerAsync(managerId);
-            return Json(null);
-            
-        }
-        public async Task<IActionResult> AddRole(string userId  )
+        [HttpPost]
+        public async Task<IActionResult> AddRole(string userId )
         {
-            string manager = "Admin";
-            await _managerService.AddRollAsync(userId, manager);
-            return Json(null);
+            return Json(await _managerService.AddRollManagerAsync(userId));
         }
+
+        [HttpGet]
         public async Task <IActionResult> GetOnlyManager()
         {
-            var onlyManager = await _managerService.GetOnlyManager();
-            return Json(onlyManager);
+            return Json(await _managerService.GetManagersAsync());
         }
+
+        [HttpGet]
         public async Task <IActionResult> GetAllMarket()
         {
-            var allMarket = await _managerService.GetAllMarketAsync();
-            return Json(allMarket);
+            return Json(await _managerService.GetAllMarketAsync());
         }
-        public async Task DeleteMarket(int marketId)
+
+        [HttpPost]
+        public async Task <IActionResult> DeleteMarket(int marketId)
         {
-            await _managerService.RemoveMarketAsync(marketId);
+            return Json(await _managerService.RemoveMarketAsync(marketId));
         }
-        public async Task AddMarket(string marketName , string marketAddress)
+
+        [HttpPost]
+        public async Task <IActionResult>AddMarket(string marketName , string marketAddress)
         {
-           await  _managerService.AddMarketAsync(marketName , marketAddress);
+            return Json(await _managerService.AddMarketAsync(marketName, marketAddress));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetRevenueFilter(string[] managersId, int?[] shopsId, DateOnly fromDate, DateOnly toDate)
+        {
+            return Json(await _managerService.GetRevenueFilterAsync(managersId, shopsId, fromDate, toDate));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRemovedUsers ()
+        {
+            return Json(await _managerService.GetRemovedUsersAsync());
+        }
+
+        [HttpPost]
+        public async Task <IActionResult>RemoveUserFinally(string userId)
+        {
+            return Json(await _managerService.RemoveUsersFinallyAsync(userId));
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> ReturnUser(string userId)
+        {
+            return Json(await _managerService.ReturnRemovedUsersAsync(userId));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemovedMarket()
+        {
+            return Json(await _managerService.GetRemovedMarketAsync());
+
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> RemoveMarketFinnaly(int marketId)
+        {
+            return Json(await _managerService.RemovedMarketFinallyAsync(marketId));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReturnMarket(int marketId)
+        {
             
+            return Json(await _managerService.ReturnRemovedMarketAsync(marketId));
         }
+       
     }
 }

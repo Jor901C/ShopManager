@@ -1,24 +1,32 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ShopManager.DAL.Entities.User
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@{
     ViewBag.Title = "Manager Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Подключаем общий макет
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
+
+
 @section Scripts {
-    <script src="~/js/Manager/ManagerSendRevenue.js"></script>
-    
+    <script src="~/js/Manager/SendRevenue.js"></script>
+    <script src="~/js/Manager/GetSales.js"></script>
+    <script src="~/js/Manager/Main.js"></script>
 }
+
+
 <meta charset="UTF-8">
+
 <div class="container">
-    <h1>Добро Пожаловать , Manager</h1>
+    <h1>Добро Пожаловать , @User.Identity?.Name!</h1>
     <div class="buttons">
         <button id="showAllRevenue">Выручки</button>
         <button id="sendReport">Отрпавить отчет</button>
-        <button id="showSales">Диограмма продаж</button>
-        <button id="calculate">Калькулятор</button>
+        <button id="main">Главная</button>
     </div>
 </div>
 
 <div class="border"></div>
-<div class="containerforResult">
-</div>
 
-
+<div class="containerforResult"></div>

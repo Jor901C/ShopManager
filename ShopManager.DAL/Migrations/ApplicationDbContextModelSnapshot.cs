@@ -64,7 +64,7 @@ namespace ShopManager.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addres");
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.Market.Sales", b =>
@@ -92,16 +92,13 @@ namespace ShopManager.DAL.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsersId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MarketId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sales");
                 });
@@ -345,13 +342,15 @@ namespace ShopManager.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManager.DAL.Entities.User.UserModel", "Users")
+                    b.HasOne("ShopManager.DAL.Entities.User.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Market");
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

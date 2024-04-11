@@ -1,32 +1,41 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ShopManager.DAL.Entities.User
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@{
     ViewBag.Title = "Admin Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Подключаем общий макет
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+
 }
+
 @section Scripts {
-    <script src="~/js/Admin/AdminUser.js"></script>
-    <script src="~/js/Admin/AdminManager.js"></script>
-    <script src="~/js/Admin/AdminMarket.js"></script>
-    <script src="~/js/Admin/AdminNewMarket.js"></script>
-    <script src="~/js/Admin/AdminGetSales.js"></script>
-    <script src="~/js/Admin/Calculator.js"></script>
+    <script src="~/js/Admin/GetUser.js"></script>
+    <script src="~/js/Admin/GetManager.js"></script>
+    <script src="~/js/Admin/GetMarket.js"></script>
+    <script src="~/js/Admin/AddMarket.js"></script>
+    <script src="~/js/Admin/GetSales.js"></script>
+    <script src="~/js/Admin/RemovedUsers.js"> </script>
+    <script src="~/js/Admin/RemovedMarket.js"></script>
+   
 }
 <meta charset="UTF-8">
 <div class="container">
-    <h1>Добро Пожаловать , Admin</h1>
+    <h1>Добро Пожаловать ,@User.Identity?.Name! </h1>
     <div class="buttons">
         <button id="showAllUsers">Пользователи</button>
         <button id="showAllManagers">Менеджеры</button>
         <button id="showAllShops">Магазины</button>
         <button id="showRevenue">Выручка</button>
-        <button id="showSales">Диограмма продаж</button>
-        <button id="addMarketTable">Новый магазин</button> <br />
-
-        <button id="calculate">Калькулятор</button>
+        <button id="showRemovedUsers">Удаленные Пользователи</button>
+        <button id="showRemovedMarket">Удаленные магазины</button><br />
+        <button id="addMarketTable">Новый магазин</button> 
     </div>
 </div>
 
 <div class="border"></div>
-<div class="containerforResult">
-</div>
+<div class="containerforResult"></div>
+<div class="diogram-container"> </div>
+
 
 

@@ -6,11 +6,19 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+        <li class="nav-item">
+            <form class="form-inline" action="/" method="GET">
+                <button type="submit" class="nav-link btn btn-link text-dark">Приветствую,@User.Identity?.Name!</button>
+            </form>
+        </li>
+
+        <li class="nav-item">
+            <form class="form-inline" action="/Register/WhatRole" method="GET">
+                <button type="submit" class="nav-link btn btn-link text-dark">К работе</button>
+            </form>
+        </li>
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Приветствую, @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Identity","Account", "Login" )">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
             <button  type="submit" class="nav-link btn btn-link text-dark">Выход</button>
         </form>
     </li>

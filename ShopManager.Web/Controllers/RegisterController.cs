@@ -6,18 +6,41 @@ using ShopManager.Services.Abstract;
 
 namespace ShopManager.Web.Controllers
 {
-    public class ManagersController : Controller
+    public class RegisterController : Controller
     {
-        private readonly IManagerService _managerService;
-        public ManagersController(IManagerService managerService)
+        private readonly UserManager<UserModel> _userManager;
+        public RegisterController(UserManager<UserModel> userManager)
         {
-            _managerService = managerService;
+            _userManager = userManager;
         }
+
         public IActionResult Exeptation()
         {
+
             return View();
         }
 
-       
+        public async Task<IActionResult> WhatRole()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                if (roles.Contains("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else if (roles.Contains("Manager"))
+                {
+                    return RedirectToAction("Index", "Manager");
+                }
+            }
+                return RedirectToAction("Exeptation", "Register");
+            
+        }
+
+
+
     }
 }

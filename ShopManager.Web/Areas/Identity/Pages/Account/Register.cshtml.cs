@@ -128,11 +128,11 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Manager/Exeptation");
+            returnUrl ??= Url.Content("~/Register/Exeptation");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                UserModel user = new UserModel { Name = Input.Name, Surname = Input.Surname, MiddleName = Input.MiddleName, PhoneNumber = Input.PhoneNumber, Email = Input.Email };
+                UserModel user = new UserModel {  Name = Input.Name, Surname = Input.Surname, MiddleName = Input.MiddleName, PhoneNumber = Input.PhoneNumber, Email = Input.Email };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -141,6 +141,12 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    
+                    if (Input.Email=="Admin" && Input.Name == "Admin" && Input.Surname == "Admin" && Input.MiddleName == "Admin")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                        
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -161,8 +167,17 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        string redirectUrl = "/Manager/Exeptation";
-                        return Redirect(redirectUrl);
+                        string redirectUrl = "/Register/Exeptation";
+                        string redirectUrlAdmin = "/Admin/index";
+                        if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return Redirect(redirectUrlAdmin);
+                            
+                        }
+                        else 
+                        { 
+                            return Redirect(redirectUrl); 
+                        }
                     }
                 }
                 foreach (var error in result.Errors)
@@ -171,9 +186,9 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
         private UserModel CreateUser()
         {

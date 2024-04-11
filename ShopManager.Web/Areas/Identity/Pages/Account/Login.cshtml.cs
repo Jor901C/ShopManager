@@ -76,7 +76,7 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Admin/Index");
+            returnUrl ??= Url.Content("~/"); 
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -85,7 +85,20 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return LocalRedirect(returnUrl);
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return Redirect("/Admin/Index");
+                    }
+                    else if (await _userManager.IsInRoleAsync(user, "Manager"))
+                    {
+                        return Redirect("/Manager/Index");
+                    }
+                    else
+                    {
+                       
+                        return Redirect("/Register/Exeptation");
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -102,8 +115,8 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }
