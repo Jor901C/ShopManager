@@ -16,7 +16,6 @@ namespace ShopManager.Web.Controllers
 
         public IActionResult Exeptation()
         {
-
             return View();
         }
 

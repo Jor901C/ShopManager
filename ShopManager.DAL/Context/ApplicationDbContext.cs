@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Entities.Market;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ShopManager.DAL.Entities.User;
 
 namespace ShopManager.Web.Data
@@ -11,10 +12,12 @@ namespace ShopManager.Web.Data
             : base(options)
         {
         }
+
         //Adding all my data to this DbContext
         public DbSet<UserModel> ShopUser { get; set; }
         public DbSet<Market> Market { get; set; }
         public DbSet<MarketAddress> Address { get; set; }
         public DbSet<Sales> Sales { get; set; }
+
     }
 }

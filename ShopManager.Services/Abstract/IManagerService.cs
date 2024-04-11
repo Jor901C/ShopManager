@@ -30,7 +30,6 @@ namespace ShopManager.Services.Abstract
         Task<ICollection<UserModelView>> GetRemovedUsersAsync();
         Task<bool> RemoveUsersFinallyAsync(string userId);
         Task<bool> ReturnRemovedUsersAsync(string userId);
-        
 
         //Actions with Sales
         Task<ICollection<SalesModelView>> GetRevenueFilterAsync(string?[] managerIds, int?[] marketIds, DateOnly fromDate, DateOnly toDate);

@@ -88,8 +88,8 @@ namespace ShopManager.Web.Controllers
             return Json(await _managerService.ReturnRemovedUsersAsync(userId));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemovedMarket()
+        [HttpGet]
+        public async Task<IActionResult> GetRemovedMarket()
         {
             return Json(await _managerService.GetRemovedMarketAsync());
 
@@ -107,6 +107,7 @@ namespace ShopManager.Web.Controllers
             
             return Json(await _managerService.ReturnRemovedMarketAsync(marketId));
         }
-       
+        
+
     }
 }

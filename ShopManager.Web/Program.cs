@@ -15,21 +15,20 @@ namespace ShopManager.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-             
+
             var connectionStringApp = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionStringApp));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-
             builder.Services.AddTransient<IManagerService, EfManagerService>(provider =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
                 return new EfManagerService(
-                    provider.GetRequiredService<ApplicationDbContext>() ,
-                    provider.GetRequiredService<UserManager<UserModel>>(), 
+                    provider.GetRequiredService<ApplicationDbContext>(),
+                    provider.GetRequiredService<UserManager<UserModel>>(),
                     provider.GetRequiredService<RoleManager<IdentityRole>>());
             });
 
@@ -49,8 +48,8 @@ namespace ShopManager.Web
 
             var app = builder.Build();
 
+            CreateAdminRole(app).GetAwaiter().GetResult();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -58,7 +57,6 @@ namespace ShopManager.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -75,6 +73,22 @@ namespace ShopManager.Web
             app.MapRazorPages();
 
             app.Run();
+        }
+
+        private static async Task CreateAdminRole(WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            // Проверяем, существует ли роль "Admin"
+            var adminRoleExists = await roleManager.RoleExistsAsync("Admin");
+
+            // Если роль "Admin" не существует, создаем её
+            if (!adminRoleExists)
+            {
+                var adminRole = new IdentityRole("Admin");
+                await roleManager.CreateAsync(adminRole);
+            }
         }
     }
 }

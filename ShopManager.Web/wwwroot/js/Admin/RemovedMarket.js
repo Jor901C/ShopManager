@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $("#showRemovedMarket").click(function () {
         $.ajax({
-            url: "/Admin/RemovedMarket",
+            url: "/Admin/GetRemovedMarket",
             type: 'GET',
             success: function (data) {
                 // Clean Container

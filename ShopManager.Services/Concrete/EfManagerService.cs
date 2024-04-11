@@ -378,6 +378,7 @@ namespace ShopManager.Services.Concrete
             }
         }
 
+
         //Show list user where IsDelete false
         public async Task<ICollection<UserModelView>> GetAllUserAsync()
         {
@@ -392,14 +393,18 @@ namespace ShopManager.Services.Concrete
 
                 foreach (var user in allUser)
                 {
-                    viewModelList.Add(new UserModelView
+                    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+                    if (!isAdmin)
                     {
-                        Name = user.Name,
-                        MiddleName = user.MiddleName,
-                        Email = user.Email!,
-                        PhoneNumber = user.PhoneNumber!,
-                        StringId = user.Id
-                    });
+                        viewModelList.Add(new UserModelView
+                        {
+                            Name = user.Name,
+                            MiddleName = user.MiddleName,
+                            Email = user.Email!,
+                            PhoneNumber = user.PhoneNumber!,
+                            StringId = user.Id
+                        });
+                    }
                 }
 
             }

@@ -141,12 +141,16 @@ namespace ShopManager.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    
-                    if (Input.Email=="Admin" && Input.Name == "Admin" && Input.Surname == "Admin" && Input.MiddleName == "Admin")
+
+                    if (Input.Name == "Admin" && Input.Surname == "Admin" && Input.MiddleName == "Admin")
                     {
-                        await _userManager.AddToRoleAsync(user, "Admin");
-                        
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        if (!userRoles.Contains("Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "Admin");
+                        }
                     }
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
